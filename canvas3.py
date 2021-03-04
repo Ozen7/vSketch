@@ -4,8 +4,8 @@ class Paint(object):
 
     DEFAULT_PEN_SIZE = 5.0
     DEFAULT_COLOR = 'black'
-    SCREEN_W=1600
-    SCREEN_H=1600
+    SCREEN_W=800
+    SCREEN_H=800
 
 
     def __init__(self):    
@@ -15,34 +15,32 @@ class Paint(object):
         self.line_button.grid(row=1,column=0)
 
         self.circle_button = Button(self.master, text='Circle',command= self.set_tool_circle)
-        self.circle_button.grid(row=2,column=0)
+        self.circle_button.grid(row=1,column=1)
 
         self.point_button = Button(self.master, text='Point',command = self.set_tool_point)
-        self.point_button.grid(row=3,column=0)
+        self.point_button.grid(row=1,column=2)
 
         self.point_button = Button(self.master, text='Freehand',command = self.set_tool_freehand)
-        self.point_button.grid(row=4,column=0)
+        self.point_button.grid(row=1,column=3)
 
         self.point_button = Button(self.master, text ='Text', command = self.set_tool_text)
-        self.point_button.grid(row=5,column=0)
+        self.point_button.grid(row=1,column=4)
 
-        self.draw_zone = Canvas(self.master,height=10000,width=10000,bg='white')
+        self.draw_zone = Canvas(self.master,height=400,width=400,bg='white')
         
         self.draw_zone.grid(row=5,columnspan=5)
         
 
         self.menubar = Menu(self.master)
         self.menu1 = Menu(self.menubar, tearoff=0)
-        self.menu1.add_command(label="Nouveau", command=self.alert)
-        self.menu1.add_command(label="Ouvrir", command=self.alert)
         self.menu1.add_separator()
-        self.menu1.add_command(label="Quitter", command=self.master.destroy)
-        self.menubar.add_cascade(label="Fichier", menu=self.menu1)
+        self.menu1.add_command(label="Quit", command=self.master.destroy)
+        self.menubar.add_cascade(label="Settings", menu=self.menu1)
         self.menu2 = Menu(self.menubar, tearoff=0)
         self.menu2.add_command(label="Undo", command=self.undo )
 
         self.menu2.add_command(label="Redo", command=self.alert)
-        self.menubar.add_cascade(label="Editer", menu=self.menu2)
+        self.menubar.add_cascade(label="Editor", menu=self.menu2)
 
         self.master.config(menu=self.menubar)
         self.master.title('UI')
@@ -103,11 +101,11 @@ class Paint(object):
     def circle_motion(self,event):
         self.draw_zone.delete('temp_circle_objects')   #sym de circle_end par rapport a circle_start
         #self.draw_zone.create_oval(event.x,event.y,(2*self.circle_start_x-event.x),(2*self.circle_start_y-event.y),tags='temp_circle_objects')
-        self.draw_zone.create_oval((self.circle_start_x),(self.circle_start_y),event.x,event.y,fill=self.DEFAULT_COLOR,tags='temp_circle_objects')
+        self.draw_zone.create_oval((self.circle_start_x),(self.circle_start_y),event.x,event.y,fill=None,tags='temp_circle_objects')
     def circle_end(self,event):
         self.draw_zone.delete('temp_circle_objects') 
         #x=self.draw_zone.create_oval(event.x,event.y,(2*self.circle_start_x-event.x),(2*self.circle_start_y-event.y))
-        x=self.draw_zone.create_oval((self.circle_start_x),(self.circle_start_y),event.x,event.y,fill=self.DEFAULT_COLOR)
+        x=self.draw_zone.create_oval((self.circle_start_x),(self.circle_start_y),event.x,event.y,fill=None)
         self.stack.append(x)
 
 
